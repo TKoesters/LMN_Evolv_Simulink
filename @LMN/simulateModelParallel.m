@@ -1,0 +1,160 @@
+function output = simulateModelParallel(obj,input)
+%SIMULATEMODELPARALLEL Summary of this function goes here
+%   Detailed explanation goes here
+
+% number of data points
+N = length(input(:,1));
+
+xRegressor = nan(1,obj.localModels{1}.calcNumberOfLocalParameters);
+zRegressor = nan(1,obj.localModels{1}.calcNumberOfZParameter);
+
+initFlagInput = true;
+initFlagOutput = true;
+initFlagInputZ = true;
+initFlagOutputZ = true;
+output = ones(N,1) * 0;
+
+ 
+[greatestInputDelay,greatestInputDelayIndex] = max(cellfun(@getDelay,obj.xDynInputDelay) + cell2mat(obj.xDeadTimes)); 
+[greatestOutputDelay,greatestOutputDelayIndex] = max(cellfun(@getDelay,obj.xDynOutputDelay)); 
+[greatestInputDelayZ,greatestInputDelayIndexZ] = max(cellfun(@getDelay,obj.zDynInputDelay) + cell2mat(obj.zDeadTimes)); 
+[greatestOutputDelayZ,greatestOutputDelayIndexZ] = max(cellfun(@getDelay,obj.zDynOutputDelay)); 
+
+% loop over every input given
+for k = 1 : N
+    
+
+    %% build current xRegressor
+    collumnPointer = 1;
+ 
+    % offset if needed
+    if obj.offset
+        xRegressor(1) = 1;
+        collumnPointer = collumnPointer +1 ;
+    end
+
+    % input dynamic part
+    for inputNumber = 1 : obj.dimIn
+        if ~isempty(obj.xDynInputDelay{inputNumber})
+            inputIndices = fliplr((k-obj.xDynInputDelay{inputNumber}:k-1) - obj.xDeadTimes{inputNumber});
+            if k<=greatestInputDelay
+                %xRegressor_init(inputIndices<1) = 0.5;
+                %xRegressor_rest(inputIndices>=1) = input(inputIndices(inputIndeices>=1),inputNumber)';
+                xRegressor(collumnPointer:collumnPointer + obj.xDynInputDelay{inputNumber}-1) = [ones(1,sum(inputIndices<1))*0,input(inputIndices(inputIndices>=1),inputNumber)'];
+%                 if ~any(inputIndices<1)
+%                     initFlagInput = false;
+%                 end
+            else
+                xRegressor(collumnPointer:collumnPointer + obj.xDynInputDelay{inputNumber}-1) = input(inputIndices,inputNumber);
+            end
+            collumnPointer = collumnPointer + obj.xDynInputDelay{inputNumber};
+        end
+    end
+
+    % input static part
+    for inputNumber = 1 : obj.dimIn
+        if ~isempty(obj.xStaticInputFunc{inputNumber})
+            for i = 1 : length(obj.xStaticInputFunc{inputNumber})
+                inputIndices = k-1-obj.xDeadTimes{inputNumber};
+                staticFunctions = obj.xStaticInputFunc{inputNumber};
+                if inputIndices<1
+                    xRegressor(collumnPointer) = staticFunctions{i}(0);
+                else
+                    xRegressor(collumnPointer) = staticFunctions{i}(input(inputIndices,inputNumber));
+                end
+                collumnPointer = collumnPointer + 1;
+            end
+        end
+    end
+
+    % output part
+    if ~isempty(obj.xDynOutputDelay{1})
+        inputIndices = fliplr(k-obj.xDynOutputDelay{1} : k-1);
+        if k<=greatestOutputDelay
+            %xRegressor_init(inputIndices<1) = 0.5;
+            %xRegressor_rest(inputIndices>=1) = input(inputIndices(inputIndeices>=1),inputNumber)';
+            xRegressor(collumnPointer:collumnPointer + obj.xDynOutputDelay{1}-1) = [ones(1,sum(inputIndices<1))*0,output(inputIndices(inputIndices>=1))'];
+%             if ~any(inputIndices<1)
+%                 initFlagOutput = false;
+%             end
+        else
+            xRegressor(collumnPointer:collumnPointer + obj.xDynOutputDelay{1}-1) = output(inputIndices);
+        end
+        collumnPointer = collumnPointer + obj.xDynOutputDelay{1};
+    end
+
+    %% build z regressor
+    % input dynamic part
+    collumnPointer = 1;
+    for inputNumber = 1 : obj.dimIn
+        if ~isempty(obj.zDynInputDelay{inputNumber})
+            inputIndices = fliplr((k-obj.zDynInputDelay{inputNumber}:k-1) - obj.zDeadTimes{inputNumber});
+            if k<=greatestInputDelayZ
+                %xRegressor_init(inputIndices<1) = 0.5;
+                %xRegressor_rest(inputIndices>=1) = input(inputIndices(inputIndeices>=1),inputNumber)';
+                zRegressor(collumnPointer:collumnPointer + obj.zDynInputDelay{inputNumber}-1) = [ones(1,sum(inputIndices<1))*0,input(inputIndices(inputIndices>=1),inputNumber)'];
+%                 if ~any(inputIndices<1)
+%                     initFlagInputZ = false;
+%                 end
+            else
+                zRegressor(collumnPointer:collumnPointer + obj.zDynInputDelay{inputNumber}-1) = input(inputIndices,inputNumber);
+            end
+            collumnPointer = collumnPointer + obj.zDynInputDelay{inputNumber};
+        end
+    end
+
+    % input static part
+    for inputNumber = 1 : obj.dimIn
+        if ~isempty(obj.zStaticInputFunc{inputNumber})
+            for i = 1 : length(obj.zStaticInputFunc{inputNumber})
+                inputIndices = k-1-obj.zDeadTimes{inputNumber};
+                staticFunctions = obj.zStaticInputFunc{inputNumber};
+                if inputIndices<1
+                    zRegressor(collumnPointer) = staticFunctions{i}(0.5);
+                else
+                    zRegressor(collumnPointer) = staticFunctions{i}(input(inputIndices,inputNumber));
+                end
+                collumnPointer = collumnPointer + 1;
+            end
+        end
+    end
+
+    % output part
+    if ~isempty(obj.zDynOutputDelay{1})
+        inputIndices = fliplr(k-obj.zDynOutputDelay{1} : k-1);
+        if k<=greatestOutputDelayZ
+            %zRegressor_init(inputIndices<1) = 0.5;
+            %zRegressor_rest(inputIndices>=1) = input(inputIndices(inputIndeices>=1),inputNumber)';
+            zRegressor(collumnPointer:collumnPointer + obj.zDynOutputDelay{1}-1) = [ones(1,sum(inputIndices<1))*0,output(inputIndices(inputIndices>=1))'];
+%             if ~any(inputIndices<1)
+%                 initFlagOutputZ = false;
+%             end
+        else
+            zRegressor(collumnPointer:collumnPointer + obj.zDynOutputDelay{1}-1) = output(inputIndices);
+        end
+        collumnPointer = collumnPointer + obj.zDynOutputDelay{1};
+    end
+    
+
+    %% calc local model outputs and multiply with validity
+    normValidity = obj.calcNormValidity(zRegressor);
+    for i = 1 : obj.getNumberOfLocalModels
+        output(k) = output(k) + xRegressor * obj.localModels{i}.theta * normValidity(i);
+    end
+
+
+end
+
+end
+
+
+
+%% functions
+
+function delay = getDelay(cellInput)
+    if isempty(cellInput)
+        delay = 0;
+    else
+        delay = cellInput;
+    end
+end

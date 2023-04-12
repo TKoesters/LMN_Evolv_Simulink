@@ -1,0 +1,51 @@
+function thetaStatic = calcStaticParameters(obj,numberOfParameters,dimIn,outputRange,inputRanges)
+%CALCSTATICPARAMETERS Summary of this function goes here
+%   Detailed explanation goes here
+
+thetaStatic = zeros(numberOfParameters,1);
+
+% offset    
+if obj.offset
+    thetaStatic(1) = obj.theta(1);
+    thetaPointer = 2;
+else
+    thetaPointer = 1; 
+end
+
+% dynamic models to static parameter
+thetaPointerDyn = thetaPointer;
+for i = 1 : dimIn
+    if ~isempty(obj.dynamicModels{i})
+        [thetaStatic(thetaPointer), thetaPointerDyn]= obj.dynamicModels{i}.getStaticParameter(obj.theta,thetaPointerDyn);
+        
+    
+        % scale if ARX models were used 
+        if strcmp(obj.dynamicModels{1}.form,'ARX')
+            thetaStatic(thetaPointer) = thetaStatic(thetaPointer) .* diff(outputRange)/diff(inputRanges(i,:));
+        end
+
+        % update pointer
+        thetaPointer = thetaPointer +1;
+    end
+end
+
+
+% static model to static parameter
+for i = 1 : dimIn
+    if ~isempty(obj.staticModels{i})
+        [theta_static, thetaIncrement] = obj.staticModels{i}.getStaticParameter(obj.theta,thetaPointerDyn);
+        if ~isempty(theta_static)
+            thetaStatic(thetaPointer:thetaPointer+thetaIncrement-1) = theta_static;
+            thetaPointer = thetaPointer + thetaIncrement;
+            thetaPointerDyn = thetaPointerDyn + thetaIncrement;
+        end
+    end
+end
+
+% check if pointer corresponds to numberOfParameters + 1 
+if thetaPointer ~= (numberOfParameters + 1)
+    error('ERROR: Something went wrong with creating static model from dynamic model');
+end
+    
+    
+end

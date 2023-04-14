@@ -1,4 +1,4 @@
-classdef validityFunction
+classdef validityFunction_evolv
     %VALIDITYFUNCTION Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -9,7 +9,7 @@ classdef validityFunction
     end
     
     methods
-        function obj = validityFunction(lmn)
+        function obj = validityFunction_evolv(lmn)
             obj.zDynInputDelay = lmn.zDynInputDelay;
             obj.zDynOutputDelay = lmn.zDynOutputDelay;
             obj.zStaticInputFunc = lmn.zStaticInputFunc;

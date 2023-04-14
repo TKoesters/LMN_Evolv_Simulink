@@ -1,4 +1,4 @@
-classdef staticModel
+classdef staticModel_evolv
     %STATICMODELS Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -8,7 +8,7 @@ classdef staticModel
     end
     
     methods
-        function obj = staticModel(lmn,p)
+        function obj = staticModel_evolv(lmn,p)
             %STATICMODELS Construct an instance of this class
             %   Detailed explanation goes here
             obj.xStaticInputFunc = lmn.xStaticInputFunc{p};

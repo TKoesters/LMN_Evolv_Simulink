@@ -3,7 +3,7 @@ function staticModel = getStaticModel(obj)
 %   Detailed explanation goes here
 
 % create instance of new LMN
-staticModel = LMN;
+staticModel = LMN_evolv;
 
 % set static Model flag
 staticModel.staticModelFlag = true;

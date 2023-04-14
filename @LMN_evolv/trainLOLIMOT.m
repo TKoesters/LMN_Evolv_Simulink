@@ -47,7 +47,7 @@ function obj = trainLOLIMOT(obj)
     obj.history.informationCriterion(iteration) = obj.informationCriterion;
 
     
-    while ~terminationCriteria
+    while ~terminationCriteria || iteration == 1
         disp(['------------------------------- Interation: ' num2str(iteration) ' -------------------------------']);
         
         % find worst local model

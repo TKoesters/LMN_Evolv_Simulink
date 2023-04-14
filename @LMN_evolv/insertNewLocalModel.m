@@ -40,7 +40,7 @@ function [obj] = insertNewLocalModel(obj,center,variance,trainFlag,splitCounter,
         obj.dimensionCheck = true;
     end
     
-    obj.localModels{obj.getNumberOfLocalModels + 1} = LM(obj,center,variance,splitCounter,typeOfValidityFunction);
+    obj.localModels{obj.getNumberOfLocalModels + 1} = LM_evolv(obj,center,variance,splitCounter,typeOfValidityFunction);
     
     % if first model is inserted create Regression matrix and output vector
     % once

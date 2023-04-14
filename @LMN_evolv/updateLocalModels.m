@@ -38,14 +38,16 @@ function obj = updateLocalModels(obj,globalError)
     
     % update all local models chosen by the method
     
-    for i = models2update
-        obj.localModels{i} = obj.localModels{i}.updateLocalModel(obj.xRegressor, obj.currentOutput ,normValidity(i),obj.AdaptOptions,obj.RegularisationMatrix,obj.dimIn,obj.indexInput,globalError);
+    for i = 1:length(models2update)
+        index = models2update(i);
+        obj.localModels{index} = obj.localModels{index}.updateLocalModel(obj.xRegressor, obj.currentOutput ,normValidity(index),obj.AdaptOptions,obj.RegularisationMatrix,obj.dimIn,obj.indexInput,globalError);
     end
     
-    for i = models2updateNoForgetting
+    for i = 1:length(models2updateNoForgetting)
+        index = models2updateNoForgetting(i);
         AdaptOptions = obj.AdaptOptions;
         AdaptOptions.forgettingFactor = 1;
-        obj.localModels{i} = obj.localModels{i}.updateLocalModel(obj.xRegressor, obj.currentOutput ,normValidity(i),AdaptOptions,obj.RegularisationMatrix,obj.dimIn,obj.indexInput,globalError);
+        obj.localModels{index} = obj.localModels{index}.updateLocalModel(obj.xRegressor, obj.currentOutput ,normValidity(index),AdaptOptions,obj.RegularisationMatrix,obj.dimIn,obj.indexInput,globalError);
     end
     
 %     assignin('base','regAdaption1',obj.localModels{1}.RegAdaption);

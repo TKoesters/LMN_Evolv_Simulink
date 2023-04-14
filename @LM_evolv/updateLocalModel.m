@@ -229,7 +229,7 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
 
         if obj.forgetting>1 
-            warning('forgetting over 1');
+            % CODE Generation: warning('forgetting over 1');
         end
 
         obj.forgetting = max([0.95,obj.forgetting]);
@@ -315,14 +315,14 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
                 TI = 10;
 
                 e_regler = -sollTrace + obj.traceMkReg;
-                if isempty(obj.u_regler)
-                    obj.u_regler = obj.RegOptions.lambda;
-                end
+%                 if isempty(u_regler)
+%                     u_regler = obj.RegOptions.lambda;
+%                 end
                 obj.Regler.I = max([0, obj.Regler.I + e_regler * 1/TI]);
                 obj.Regler.P = Kp * e_regler;
-                obj.u_regler = obj.Regler.I + obj.Regler.P;
-                obj.u_regler = max([0,obj.u_regler]);
-                obj.RegAdaption = obj.u_regler;%/obj.RegOptions.lambda;
+                u_regler = obj.Regler.I + obj.Regler.P;
+                u_regler = max([0,u_regler]);
+                obj.RegAdaption = u_regler;%/obj.RegOptions.lambda;
 
             case 'PI-Regler-MISO'
                 sollTrace = adaptOptions.desiredTrace;
@@ -330,16 +330,16 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
                 Kp = 0; %0.0005;
                 TI = 20;
-                traceMKReg = zeros(dimIn,1);
+                traceMKReg = zeros(size(obj.traceMkReg));
                 for i = 1 : dimIn
                     if adaptOptions.inputs4Regularization(i)  
                         traceMKReg(i) = sum(invMKRegDiag(indexInput(i,1):indexInput(i,2)));
                         e_regler = -sollTrace + traceMKReg(i);
                         obj.Regler.I(i) = max([0, obj.Regler.I(i) + e_regler * 1/TI]);
                         obj.Regler.P = Kp * e_regler;
-                        obj.u_regler = obj.Regler.I(i) + obj.Regler.P;
-                        obj.u_regler = min(max([0,obj.u_regler]),100);
-                        obj.RegAdaption(i) = obj.u_regler;
+                        u_regler = obj.Regler.I(i) + obj.Regler.P;
+                        u_regler = min(max([0,u_regler]),100);
+                        obj.RegAdaption(i) = u_regler;
                     else
                         obj.RegAdaption(i) = 1;
                     end         
@@ -354,14 +354,14 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
                 TI = 1;
 
                 e_regler = max([0,-sollTrace + obj.traceMkReg]);
-                if isempty(obj.u_regler)
-                    obj.u_regler = obj.RegOptions.lambda;
-                end
+%                 if isempty(u_regler)
+%                     u_regler = obj.RegOptions.lambda;
+%                 end
                 obj.Regler.I = obj.Regler.I + e_regler * 1/TI;
                 obj.Regler.P = Kp * e_regler;
-                obj.u_regler = obj.Regler.I + obj.Regler.P;
-                obj.u_regler = max([0,obj.u_regler]);
-                obj.RegAdaption = obj.u_regler;%/obj.RegOptions.lambda;
+                u_regler = obj.Regler.I + obj.Regler.P;
+                u_regler = max([0,u_regler]);
+                obj.RegAdaption = u_regler;%/obj.RegOptions.lambda;
 
             otherwise
         end

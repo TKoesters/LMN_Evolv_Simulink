@@ -3,7 +3,7 @@ function  normValidity = calcNormValidityFeedback(obj,input,outputLM)
 %   Detailed explanation goes here
 
 
-currentOutput = mean(outputLM(,)
+%currentOutput = mean(outputLM(,)
 
     
 % get validity from all local models and output

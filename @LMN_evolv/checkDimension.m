@@ -75,7 +75,9 @@ function obj = checkDimension(obj)
     
     % check input info
     for i = 1 : obj.dimIn
-        if length(obj.info.inputDescription) <i
+        if isempty(obj.info)
+            obj.info.inputDescription{i} = ['u_' num2str(i)];
+        elseif length(obj.info.inputDescription) <i
             obj.info.inputDescription{i} = ['u_' num2str(i)];
         end
     end

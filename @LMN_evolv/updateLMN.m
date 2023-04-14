@@ -11,9 +11,10 @@ end
 
 
 % check if adaption flag is already set, if not initialize for adaption
-if ~obj.adaptionFlag
-    obj = obj.initializeLMNforAdaption;
-end
+% Commented out for code generation
+% if ~obj.adaptionFlag
+%     obj = obj.initializeLMNforAdaption;
+% end
 
 % update Regressors and Datapuffer
 obj = obj.updateRegressors(input,output);
@@ -35,14 +36,15 @@ if updateFlagOffset
 end
 
 % if history data storing switched on store current adaption status
-if obj.AdaptOptions.dataCollection
-    if isempty(obj.history.adaptionStatus)
-        timeIndex = 0;
-    else
-        timeIndex = size(obj.history.adaptionStatus,4);
-    end
-    obj.history.adaptionStatus(:,:,:,timeIndex + 1) =  obj.showAdaptionStatus;
-end
+% CODE GENERATION
+% if obj.AdaptOptions.dataCollection
+%     if isempty(obj.history.adaptionStatus)
+%         timeIndex = 0;
+%     else
+%         timeIndex = size(obj.history.adaptionStatus,4);
+%     end
+%     obj.history.adaptionStatus(:,:,:,timeIndex + 1) =  obj.showAdaptionStatus;
+% end
 % HIER MORGEN WEITER MACHEN !!!! 
 
 

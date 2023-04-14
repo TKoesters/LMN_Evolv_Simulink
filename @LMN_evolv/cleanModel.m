@@ -17,9 +17,9 @@ function obj = cleanModel(obj)
 
 
     % delete weighting and regressors of global model
-    obj.xRegressor = [];
-    obj.zRegressor = [];
-    obj.weighting = [];
+%     obj.xRegressor = [];
+%     obj.zRegressor = [];
+%     obj.weighting = [];
 
 end
 

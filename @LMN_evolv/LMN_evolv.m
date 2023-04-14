@@ -209,7 +209,7 @@ classdef LMN_evolv
             obj.AdaptOptions.methodEvolving = 'none';
             obj.AdaptOptions.methodUpdateLocalModels = 'all';
             obj.AdaptOptions.Sigma0 = 0;
-            obj.AdaptOptions.compensateNeff = 'false';
+            obj.AdaptOptions.compensateNeff = false;
             obj.AdaptOptions.ActivationThreshold = 0;
             obj.AdaptOptions.nBest = 0;
             obj.AdaptOptions.offsetAdaptionSpeed = 0;

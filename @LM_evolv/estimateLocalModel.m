@@ -54,6 +54,7 @@ function [obj] = estimateLocalModel(obj,input,output,xRegressor,weighting)
             obj.theta = fminunc(modelError,zeros(length(X(1,:)),1));
             
         otherwise
+            error('no valid regularization method were given')
             
     end
     

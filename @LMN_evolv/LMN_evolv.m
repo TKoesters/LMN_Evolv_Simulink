@@ -1,4 +1,4 @@
-classdef LMN
+classdef LMN_evolv
     %LMN High level Claas to save a whole local model network
     %   
     %   LMN Claas consits of different local models (LM). The LMN class
@@ -155,7 +155,7 @@ classdef LMN
         AdaptOptions;
         xDeadTimeDataPuffer = {[]};
         zDeadTimeDataPuffer = {[]};
-        currentOutput = [];
+        currentOutput = 0;
         globalError = 0;
         
         % get Static Model 
@@ -192,7 +192,7 @@ classdef LMN
     
     methods
         % Constructor
-        function obj = LMN()
+        function obj = LMN_evolv%(dimIn,xDynInputDelay,xDynOutputDelay,zDynInputDelay,zDynOutputDelay,localModels,zSpaceInputFilterPoles,xSpaceInputFilterPoles,maxNumberOfLocalModels)
             %LMN Construct an instance of this class
             %   Detailed explanation goes here    
             
@@ -230,7 +230,15 @@ classdef LMN
             obj.history.testError = [];
             obj.history.informationCriterion = [];
             obj.history.adaptionStatus = [];
+
+            % Filtering of inputs 
+            obj.zSpaceInputFilterPoles = {[]};
+            obj.xSpaceInputFilterPoles = {[]};
+            obj.xSpaceFilterPuffer = {[]};
+            obj.zSpaceFilterPuffer = {[]};
             
+%             % max number of local models 
+%             obj.maxNumberOfLocalModels = maxNumberOfLocalModels;
             
         end
         
@@ -325,7 +333,7 @@ classdef LMN
        obj = terminateAdaption(obj);
        
        % Adaption
-       obj = initializeLMNforAdaption(obj,numerDatapoints);
+       %obj = initializeLMNforAdaption(obj,numerDatapoints);
        [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset)
        obj = evolveLMN(obj);
        obj = updateLocalModels(obj,globalError);

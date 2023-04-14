@@ -1,4 +1,4 @@
-classdef dynModel
+classdef dynModel_evolv
     %DYNMODEL Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -7,7 +7,7 @@ classdef dynModel
     end
     
     methods
-        function obj = dynModel(inputDelay,outputDelay)
+        function obj = dynModel_evolv(inputDelay,outputDelay)
             %DYNMODEL Construct an instance of this class
             %   Detailed explanation goes here
 

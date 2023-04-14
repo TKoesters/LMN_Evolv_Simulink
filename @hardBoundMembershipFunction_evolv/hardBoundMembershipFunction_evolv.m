@@ -1,4 +1,4 @@
-classdef hardBoundMembershipFunction < validityFunction
+classdef hardBoundMembershipFunction_evolv < validityFunction
     %GAUSIANMEMBERSHIPFUNCTION Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -11,7 +11,7 @@ classdef hardBoundMembershipFunction < validityFunction
     end
     
     methods
-        function obj = hardBoundMembershipFunction(lmn,bound,direction)
+        function obj = hardBoundMembershipFunction_evolv(lmn,bound,direction)
             %GAUSIANMEMBERSHIPFUNCTION Construct an instance of this class
             %   Detailed explanation goes here
 

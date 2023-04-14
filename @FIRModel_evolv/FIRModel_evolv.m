@@ -1,4 +1,4 @@
-classdef FIRModel < dynModel
+classdef FIRModel_evolv < dynModel_evolv
     %FIRMODEL Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -14,7 +14,7 @@ classdef FIRModel < dynModel
     end
     
     methods
-        function obj = FIRModel(lmn,p)
+        function obj = FIRModel_evolv(lmn,p)
             %FIRMODEL Construct an instance of this class
             %   Detailed explanation goes here
             obj.inputDelays = lmn.xDynInputDelay{p};

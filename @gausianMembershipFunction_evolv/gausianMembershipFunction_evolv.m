@@ -1,4 +1,4 @@
-classdef gausianMembershipFunction < validityFunction
+classdef gausianMembershipFunction_evolv < validityFunction_evolv
     %GAUSIANMEMBERSHIPFUNCTION Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -8,11 +8,11 @@ classdef gausianMembershipFunction < validityFunction
     end
     
     methods
-        function obj = gausianMembershipFunction(lmn,center,variance)
+        function obj = gausianMembershipFunction_evolv(lmn,center,variance)
             %GAUSIANMEMBERSHIPFUNCTION Construct an instance of this class
             %   Detailed explanation goes here
 
-            obj@validityFunction(lmn);
+            obj@validityFunction_evolv(lmn);
             
             % define center of gausian Function
             obj.center = center;

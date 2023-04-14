@@ -1,4 +1,4 @@
-classdef ARXModel < dynModel
+classdef ARXModel_evolv < dynModel
     %ARXMODEL Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -10,7 +10,7 @@ classdef ARXModel < dynModel
     end
     
     methods
-        function obj = ARXModel(lmn,p)
+        function obj = ARXModel_evolv(lmn,p)
             %ARXMODEL Construct an instance of this class
             %   Detailed explanation goes here
             obj.inputDelays = lmn.xDynInputDelay{p};

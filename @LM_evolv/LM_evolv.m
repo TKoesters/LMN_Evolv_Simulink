@@ -1,4 +1,4 @@
-classdef LM
+classdef LM_evolv
     %LM Local Model Class
     %
     %  Class that defines how the local models look like. It consits of
@@ -95,7 +95,7 @@ classdef LM
     end
     
     methods
-        function obj = LM(lmn,center,variance,splitCounter,typeOfValidityFunction)
+        function obj = LM_evolv(lmn,center,variance,splitCounter,typeOfValidityFunction)
             %LM Construct an instance of this class
             %   Detailed explanation goes here
             
@@ -115,13 +115,13 @@ classdef LM
                if isempty(lmn.xDynOutputDelay{1}) && isempty(lmn.xDynInputDelay{i})
                    obj.dynamicModels{i} = [];
                elseif isempty(lmn.xDynOutputDelay{1})
-                   obj.dynamicModels{i} = FIRModel(lmn,i);
+                   obj.dynamicModels{i} = FIRModel_evolv(lmn,i);
                else
-                   obj.dynamicModels{i} = ARXModel(lmn,i);
+                   obj.dynamicModels{i} = ARXModel_evolv(lmn,i);
                end
                
                % static
-               obj.staticModels{i} = staticModel(lmn,i);
+               obj.staticModels{i} = staticModel_evolv(lmn,i);
               
                
             end
@@ -142,9 +142,9 @@ classdef LM
             % create validity function regarding the chosen options in LMN
             switch typeOfValidityFunction
                 case 'gausian'
-                    obj.validityFunction = gausianMembershipFunction(lmn,center,variance);
+                    obj.validityFunction = gausianMembershipFunction_evolv(lmn,center,variance);
                 case 'hardBound'
-                    obj.validityFunction = hardBoundMembershipFunction(lmn,center,variance);
+                    obj.validityFunction = hardBoundMembershipFunction_evolv(lmn,center,variance);
                 otherwise
                     error('ERROR: no valid type of validity function was given');
             end

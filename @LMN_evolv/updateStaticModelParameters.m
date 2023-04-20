@@ -6,4 +6,3 @@ for i = 1 : obj.getNumberOfLocalModels
 end
 
 end
-

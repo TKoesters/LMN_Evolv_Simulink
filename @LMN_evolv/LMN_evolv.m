@@ -337,15 +337,21 @@ classdef LMN_evolv
        [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset)
        obj = evolveLMN(obj);
        obj = updateLocalModels(obj,globalError);
-       [obj,xInputTt,zInputTt] = updateDeadtimeDatapuffer(obj,input)
-       obj = updateRegressors(obj,input,output)
-       obj = setLocalAdaptionFlag(obj,flagValue)
-       obj = updateGlobalOffset(obj,predOutput)
+       [obj,xInputTt,zInputTt] = updateDeadtimeDatapuffer(obj,input);
+       obj = updateRegressors(obj,input,output);
+       obj = setLocalAdaptionFlag(obj,flagValue);
+       obj = updateGlobalOffset(obj,predOutput);
+       linModel = getCurrentLinModel(obj,method);
+       [A,B,C,D,offset] = getCurrentLinModelStateSpace(obj,method);
+       [ATt,BTt,CTt,DTt,offset] = getCurrentLinModelStateSpaceTt(obj,method);
+       theta = getCurrentLinCoeffs(obj,method);
+       [localLinParameters,localCenters,localVariance] = getAllParameters(obj);
 
        % get Static Model 
        staticModel = getStaticModel(obj);
        obj = updateStaticModelParameters(obj,dynModel);
        staticModel = insertGivenLocalModel(obj,localModel);
+       [staticTheta,localVariance,localCenters] = getCurrentStaticParameters(obj);
        
        % Gradient calculation
        grad = calcGradient(obj,AP);

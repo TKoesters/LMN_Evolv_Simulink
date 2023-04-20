@@ -232,7 +232,7 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
             % CODE Generation: warning('forgetting over 1');
         end
 
-        obj.forgetting = max([0.95,obj.forgetting]);
+        obj.forgetting = max([0.90,obj.forgetting]);
         % Update of Regularisation strength
 
 %         %1) calculate measurement of MK invertebility

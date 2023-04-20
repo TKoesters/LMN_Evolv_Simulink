@@ -7,7 +7,7 @@ nLin = 0;
 nNonlin = 0;
 for i = 1 : obj.getNumberOfLocalModels
    nLin = nLin + obj.localModels{i}.calcNumberOfLocalParameters;
-   nNonlin = nNonlin + obj.localModels{1}.validityFunction.getNumberOfParameters;
+   nNonlin = nNonlin + obj.localModels{i}.validityFunction.getNumberOfParameters;
 end
 
 % Offset

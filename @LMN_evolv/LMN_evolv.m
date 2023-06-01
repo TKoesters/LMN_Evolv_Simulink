@@ -288,6 +288,7 @@ classdef LMN_evolv
        numberOfEffParameters = getNumberOfEffParameters(obj);
        n = getNumberOfParameters(obj);
        maxDelay = getMaxDelay(obj);
+       maxDelayTt = getMaxDelayTt(obj);
        compareModel(obj,trainOrTest);
        plotTrainData(obj);
        plotTestData(obj);
@@ -343,7 +344,7 @@ classdef LMN_evolv
        obj = updateGlobalOffset(obj,predOutput);
        linModel = getCurrentLinModel(obj,method);
        [A,B,C,D,offset] = getCurrentLinModelStateSpace(obj,method);
-       [ATt,BTt,CTt,DTt,offset] = getCurrentLinModelStateSpaceTt(obj,method);
+       [ATt,BTt,CTt,DTt,offset] = getCurrentLinModelStateSpaceTt(obj,method,delay,dimIn);
        theta = getCurrentLinCoeffs(obj,method);
        [localLinParameters,localCenters,localVariance] = getAllParameters(obj);
 
@@ -351,7 +352,7 @@ classdef LMN_evolv
        staticModel = getStaticModel(obj);
        obj = updateStaticModelParameters(obj,dynModel);
        staticModel = insertGivenLocalModel(obj,localModel);
-       [staticTheta,localVariance,localCenters] = getCurrentStaticParameters(obj);
+       [staticTheta,localCenters,localVariance] = getCurrentStaticParameters(obj,numberOfLocalModels,numberOfLocalStaticParameters)
        
        % Gradient calculation
        grad = calcGradient(obj,AP);

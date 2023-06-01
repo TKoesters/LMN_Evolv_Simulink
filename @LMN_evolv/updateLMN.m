@@ -37,14 +37,14 @@ end
 
 % if history data storing switched on store current adaption status
 % CODE GENERATION
-if obj.AdaptOptions.dataCollection
-    if isempty(obj.history.adaptionStatus)
-        timeIndex = 0;
-    else
-        timeIndex = size(obj.history.adaptionStatus,4);
-    end
-    obj.history.adaptionStatus(:,:,:,timeIndex + 1) =  obj.showAdaptionStatus;
-end
+% if obj.AdaptOptions.dataCollection
+%     if isempty(obj.history.adaptionStatus)
+%         timeIndex = 0;
+%     else
+%         timeIndex = size(obj.history.adaptionStatus,4);
+%     end
+%     obj.history.adaptionStatus(:,:,:,timeIndex + 1) =  obj.showAdaptionStatus;
+% end
 % HIER MORGEN WEITER MACHEN !!!! 
 
 

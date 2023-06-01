@@ -330,7 +330,7 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
                 Kp = 0; %0.0005;
                 TI = 20;
-                traceMKReg = zeros(size(obj.traceMkReg));
+                traceMKReg = zeros(dimIn,1);
                 for i = 1 : dimIn
                     if adaptOptions.inputs4Regularization(i)  
                         traceMKReg(i) = sum(invMKRegDiag(indexInput(i,1):indexInput(i,2)));

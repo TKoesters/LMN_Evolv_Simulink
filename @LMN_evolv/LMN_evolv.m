@@ -1,6 +1,6 @@
 classdef LMN_evolv
     %LMN High level Claas to save a whole local model network
-    %   
+    %   % hallo % 
     %   LMN Claas consits of different local models (LM). The LMN class
     %   orgenizes the LMs to a local model network and supports functions 
     %   as training or updating of the local model network. Furthermore it

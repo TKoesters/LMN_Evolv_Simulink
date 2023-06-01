@@ -6,7 +6,7 @@ thetaStatic = zeros(numberOfParameters,1);
 
 % offset    
 if obj.offset
-    if ~all(cellfun(@isempty,obj.dynamicModels)) && strcmp(obj.dynamicModels{1}.form,'ARX')
+    if checkForDynamicModel(obj.dynamicModels) && strcmp(obj.dynamicModels{1}.form,'ARX')
 
         % WARUM ??
         thetaStatic(1) = obj.theta(1) / diff(outputRange);
@@ -55,4 +55,18 @@ if thetaPointer ~= (numberOfParameters + 1)
 end
     
     
+end
+
+
+%% functions
+function out = checkForDynamicModel(in)
+    % find any dynamic model
+    out = false;
+    
+    for i = 1 : length(in)
+        if ~isempty(in{i})
+           out = true;
+           break;
+        end
+    end
 end

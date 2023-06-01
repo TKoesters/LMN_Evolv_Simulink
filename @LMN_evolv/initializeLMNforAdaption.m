@@ -2,6 +2,8 @@ function [obj] = initializeLMNforAdaption(obj,numberDatapoints)
 %INITIALIZELMNFORADAPTION Summary of this function goes here
 %   Detailed explanation goes here
 
+%#codegen
+
     %% input handling
     if nargin == 1
         numberDatapoints = 0;
@@ -25,12 +27,19 @@ function [obj] = initializeLMNforAdaption(obj,numberDatapoints)
         else
             obj.xDeadTimes{i} = obj.xDeadTimes{i} + 1;
         end
-        if obj.xDeadTimes{i} == 0
-            obj.xDeadTimeDataPuffer{i} = [];
-        else
-            obj.xDeadTimeDataPuffer{i} = ones(1,obj.xDeadTimes{i}) * 0.5;
-        end
-        
+
+
+        % was not supported by code generation
+%         if obj.xDeadTimes{i} == 0
+%             obj.xDeadTimeDataPuffer{i} = 0;
+%         else
+%             obj.xDeadTimeDataPuffer{i} = double(ones(1,obj.xDeadTimes{i}) * 0.5);
+%         end
+
+        % code generation version
+        % find max deadtime
+        maxDeadTime = getMaxDeadTime(obj.xDeadTimes);
+        obj.xDeadTimeDataPuffer = ones(obj.dimIn,maxDeadTime) * 0.5;
 
         if all(isempty(cell2mat(obj.zDynInputDelay(:))))
             % dont do anything 
@@ -38,11 +47,15 @@ function [obj] = initializeLMNforAdaption(obj,numberDatapoints)
             obj.zDeadTimes{i} = obj.zDeadTimes{i} + 1;
         end
 
-        if obj.zDeadTimes{i} == 0
-            obj.zDeadTimeDataPuffer{i} = [];
-        else
-            obj.zDeadTimeDataPuffer{i} = ones(1,obj.zDeadTimes{i}) * 0.5;
-        end
+%         if obj.zDeadTimes{i} == 0
+%             obj.zDeadTimeDataPuffer{i} = [];
+%         else
+%             obj.zDeadTimeDataPuffer{i} = double(ones(1,obj.zDeadTimes{i}) * 0.5);
+%         end
+
+        % code generation verison
+        maxDeadTime = getMaxDeadTime(obj.zDeadTimes);
+        obj.zDeadTimeDataPuffer = ones(obj.dimIn,maxDeadTime);
     end
     
     
@@ -210,5 +223,14 @@ function [obj] = initializeLMNforAdaption(obj,numberDatapoints)
         obj.history.adaptionStatus = [];
     end
   
+end
+
+
+%% functions 
+function out = getMaxDeadTime(in)
+    out = 0;
+    for i  = 1 : length(in)
+        out = max(out,in{i});
+    end
 end
 

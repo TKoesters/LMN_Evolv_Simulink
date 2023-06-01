@@ -26,7 +26,7 @@ function [splitDyn,splitStatic,nPosSplits] = getPosSplits(obj)
         splitDynOut = obj.zDynOutputDelay{1};
     end
 
-    nPosSplits = sum(splitDyn) + sum(splitStatic) + sum(splitDynOut);
+    nPosSplits = sum(sum(splitDyn) + sum(splitStatic) + sum(splitDynOut));
 
 end
 

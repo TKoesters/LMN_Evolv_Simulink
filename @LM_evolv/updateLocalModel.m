@@ -200,17 +200,20 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
         end
         RegularisationMatrix = weightvector .* RegularisationMatrix;
 
+
+
+        % invert matrix first
+        if adaptOptions.compensateNeff
+            inverseMatrix = (obj.M_k + obj.N_eff * RegularisationMatrix)\1;
+        else
+            inverseMatrix = (obj.M_k + RegularisationMatrix)\1;
+        end
+
         if isempty(RegularisationMatrix)
             obj.theta = (obj.M_k)\...
             obj.Z_k;
         else
-            if adaptOptions.compensateNeff
-                obj.theta = (obj.M_k + obj.N_eff * RegularisationMatrix)\...
-                    obj.Z_k;
-            else
-                obj.theta = (obj.M_k + RegularisationMatrix)\...
-                    obj.Z_k;
-            end
+            obj.theta = inverseMatrix * obj.Z_k;
         end
         
         if strcmp(adaptOptions.methodParameterUpdate,'LRLS-VR-VF')
@@ -326,7 +329,7 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
             case 'PI-Regler-MISO'
                 sollTrace = adaptOptions.desiredTrace;
-                invMKRegDiag = diag(inv(obj.M_k + RegularisationMatrix));
+                invMKRegDiag = diag(inverseMatrix);
 
                 Kp = 0; %0.0005;
                 TI = 20;

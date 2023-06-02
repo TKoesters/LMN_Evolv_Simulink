@@ -204,9 +204,9 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
         % invert matrix first
         if adaptOptions.compensateNeff
-            inverseMatrix = (obj.M_k + obj.N_eff * RegularisationMatrix)\1;
+            inverseMatrix = (obj.M_k + obj.N_eff * RegularisationMatrix)\eye(size(RegularisationMatrix));
         else
-            inverseMatrix = (obj.M_k + RegularisationMatrix)\1;
+            inverseMatrix = (obj.M_k + RegularisationMatrix)\eye(size(RegularisationMatrix));
         end
 
         if isempty(RegularisationMatrix)

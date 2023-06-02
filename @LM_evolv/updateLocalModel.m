@@ -1,6 +1,6 @@
 function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,RegularisationMatrix,dimIn,indexInput,globalError)
 %UPDATELOCALMODEL Summary of this function goes here
-%   Detailed explanation goes here
+%   Detailed explanation goes here test
     
     x_k = input;
     y_k = output;

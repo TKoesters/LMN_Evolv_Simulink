@@ -1,4 +1,4 @@
-function data = showAdaptionStatus(obj)
+function data = showAdaptionStatus(obj,information2plot,dimIn)
 % showAdaptionStatus
 
 
@@ -12,9 +12,14 @@ function data = showAdaptionStatus(obj)
 %
 % -------------------------------------------------------------------------
 
-information2plot = obj.AdaptOptions.information2plot;
+if nargin==1
+    information2plot = obj.AdaptOptions.information2plot;
+    dimIn = obj.dimIn;
+elseif nargin==2
+    dimIn = obj.dimIn;
+end
 
-data = zeros(length(information2plot),obj.getNumberOfLocalModels,obj.dimIn);
+data = zeros(length(information2plot),obj.getNumberOfLocalModels,dimIn);
 % create only figure if no output is given
 if nargout==0
     figure;
@@ -23,7 +28,7 @@ end
 % iterate through all information
 for i = 1 : length(information2plot)
 
-    value = zeros(obj.getNumberOfLocalModels,obj.dimIn);
+    value = zeros(obj.getNumberOfLocalModels,dimIn);
 
     % iterate through all local models 
     for ii = 1 : obj.getNumberOfLocalModels
@@ -32,7 +37,7 @@ for i = 1 : length(information2plot)
                 value(ii,1) = obj.localModels{ii}.N_eff;
 
             case 'regAdaption'
-                value(ii,1:obj.dimIn) = obj.localModels{ii}.RegAdaption';
+                value(ii,1:dimIn) = obj.localModels{ii}.RegAdaption';
 
             case 'forgetting'
                 if isempty(obj.localModels{ii}.forgetting)
@@ -41,7 +46,7 @@ for i = 1 : length(information2plot)
                     value(ii,1) = obj.localModels{ii}.forgetting;
                 end
             case 'trace Reg'
-                value(ii,1: obj.dimIn) = obj.localModels{ii}.traceMkReg;
+                value(ii,1: dimIn) = obj.localModels{ii}.traceMkReg;
 
         end
 

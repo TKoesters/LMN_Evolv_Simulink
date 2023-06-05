@@ -7,7 +7,9 @@ function [localLinParameters,localCenters,localVariance] = getAllParameters(obj)
 % 
 % M = [theta_LM1, theta_LM2, ... , theta_LMn];
 
-localLinParameters = zeros(obj.localModels{1}.calcNumberOfLocalParameters,obj.getNumberOfLocalModels);
+% CODE GENERATION 
+% localLinParameters = zeros(obj.localModels{1}.calcNumberOfLocalParameters,obj.getNumberOfLocalModels);
+localLinParameters = zeros(length(obj.localModels{1}.theta),obj.getNumberOfLocalModels);
 
 for i = 1 : obj.getNumberOfLocalModels
     localLinParameters(:,i) = obj.localModels{i}.theta;
@@ -16,7 +18,9 @@ end
 %% create matrix with local Centers AND Variances 
 % M = [mu_LM1, mu_LM2, ... , mu_LMn];
 % S = [sigma_LM1, sigma_LM2, ... , sigma_LMn];
-[~,~,nZSpace] = obj.getPosSplits;
+% CODE GENERATION
+% [~,~,nZSpace] = obj.getPosSplits;
+nZSpace = length(obj.localModels{1}.getCenter);
 localCenters = zeros(nZSpace,obj.getNumberOfLocalModels);
 
 for i = 1 : obj.getNumberOfLocalModels

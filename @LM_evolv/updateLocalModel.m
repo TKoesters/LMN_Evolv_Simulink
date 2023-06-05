@@ -1,6 +1,6 @@
 function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,RegularisationMatrix,dimIn,indexInput,globalError)
 %UPDATELOCALMODEL Summary of this function goes here
-%   Detailed explanation goes here
+%   Detailed explanation goes here test
     
     x_k = input;
     y_k = output;
@@ -204,9 +204,9 @@ function obj  = updateLocalModel(obj,input,output,normValidity,adaptOptions,Regu
 
         % invert matrix first
         if adaptOptions.compensateNeff
-            inverseMatrix = (obj.M_k + obj.N_eff * RegularisationMatrix)\1;
+            inverseMatrix = (obj.M_k + obj.N_eff * RegularisationMatrix)\eye(size(RegularisationMatrix));
         else
-            inverseMatrix = (obj.M_k + RegularisationMatrix)\1;
+            inverseMatrix = (obj.M_k + RegularisationMatrix)\eye(size(RegularisationMatrix));
         end
 
         if isempty(RegularisationMatrix)

@@ -16,7 +16,7 @@ for i = 1 : obj.dimIn
         
         case 1
             xFilteredInput(i) = xInput(i) * (1-obj.xSpaceInputFilterPoles{i}) + obj.xSpaceFilterPuffer{i} * obj.xSpaceInputFilterPoles{i};
-            obj.xSpaceFilterPuffer{i} = xFilteredInput;
+            obj.xSpaceFilterPuffer{i} = xFilteredInput(i);
 
         case 2
             xFilteredInput(i) = xInput(i) * prod([1; 1]-obj.xSpaceInputFilterPoles{i})...

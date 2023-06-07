@@ -314,7 +314,7 @@ classdef LMN_evolv
        plotPartialDependency(obj,AP);
        plotTrainingStats(obj);
        drawModelBlockDiagram(obj);
-       data = showAdaptionStatus(obj);
+       data = showAdaptionStatus(obj,information2plot);
        plotAdaptionStatusOverTime(obj,adaptionStatus);
        
        % normalization

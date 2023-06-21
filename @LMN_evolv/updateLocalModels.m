@@ -50,6 +50,10 @@ function obj = updateLocalModels(obj,globalError)
         obj.localModels{index} = obj.localModels{index}.updateLocalModel(obj.xRegressor, obj.currentOutput ,normValidity(index),AdaptOptions,obj.RegularisationMatrix,obj.dimIn,obj.indexInput,globalError);
     end
     
+
+    % find most active model
+    [~,obj.activeModel] = max(normValidity);
+    
 %     assignin('base','regAdaption1',obj.localModels{1}.RegAdaption);
 %      assignin('base','regAdaption2',obj.localModels{2}.RegAdaption);
 %     assignin('base','regAdaption3',obj.localModels{3}.RegAdaption);

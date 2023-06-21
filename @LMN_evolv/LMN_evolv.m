@@ -157,6 +157,7 @@ classdef LMN_evolv
         zDeadTimeDataPuffer = {[]};
         currentOutput = 0;
         globalError = 0;
+        activeModel = 1;
         
         % get Static Model 
         staticModelFlag = false;

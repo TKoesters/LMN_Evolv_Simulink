@@ -2,14 +2,19 @@ function output = reNormOutput(obj,normedOutput)
 %RENORMOUTPUT Summary of this function goes here
 %   Detailed explanation goes here
 
-% if global offset is active: correct normed output with offset
-if obj.globalOffsetFlag
-    normedOutput = normedOutput + obj.globalOffset;
-end
+% order of offset and gain
+% y_hat = f(x) * gain + offset
+% --> first calc gain
+% --> second add offset
 
 % if global gain is active: correct normed output with gain
 if obj.globalGainFlag
     normedOutput = normedOutput * obj.globalGain;
+end
+
+% if global offset is active: correct normed output with offset
+if obj.globalOffsetFlag
+    normedOutput = normedOutput + obj.globalOffset;
 end
 
 output = reNormData(normedOutput,obj.outputRange);

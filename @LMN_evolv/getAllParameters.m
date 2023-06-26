@@ -15,11 +15,13 @@ for i = 1 : obj.getNumberOfLocalModels
     localLinParameters(:,i) = obj.localModels{i}.theta;
 end
 
+% multiply all parameters with gain
+localLinParameters = localLinParameters * obj.globalGain;
+
 % add global offset to each local offset
 localLinParameters(1,:) = localLinParameters(1,:) + obj.globalOffset; 
 
-% use global gain
-localLinParameters(2:end,:) = localLinParameters(2:end,:) * obj.globalGain; 
+
 
 %% create matrix with local Centers AND Variances 
 % M = [mu_LM1, mu_LM2, ... , mu_LMn];

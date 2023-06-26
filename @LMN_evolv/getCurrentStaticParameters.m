@@ -15,15 +15,17 @@ for i = 1 : numberOfLocalModels
    staticTheta(:,i) = obj.localModels{i}.calcStaticParameters(numberOfLocalStaticParameters,obj.dimIn,obj.outputRange,obj.inputRanges);
 end
 
+% calc global gain when present
+if obj.globalGainFlag
+    staticTheta = staticTheta * obj.globalGain; 
+end
+
 % add global offset when present
 if obj.globalOffsetFlag
     staticTheta(1,:) = staticTheta(1,:) + obj.globalOffset;
 end
 
-% calc global gain when present
-if obj.globalGainFlag
-    staticTheta(2:end,:) = staticTheta(2:end,:) * obj.globalGain; 
-end
+
 
 %% create matrix with local Centers AND Variances 
 % M = [mu_LM1, mu_LM2, ... , mu_LMn];

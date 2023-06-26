@@ -15,6 +15,10 @@ staticModel.dimIn = obj.dimIn;
 staticModel.globalOffset = obj.globalOffset;
 staticModel.globalOffsetFlag = obj.globalOffsetFlag;
 
+% add global Gain
+staticModel.globalGain = obj.globalGain;
+staticModel.globalGainFlag = obj.globalGainFlag;
+
 % iterate through all inputs
 for i = 1 : obj.dimIn
     

@@ -12,14 +12,19 @@ function outputNormed = normOutput(obj,output,useGlobal)
     
     outputNormed = normData(output,obj.outputRange);
 
-    % if global gain is active: correct normed output with offset
-    if obj.globalGainFlag && useGlobal
-        outputNormed = outputNormed / obj.globalGain;
-    end
+    % order of offset and gain
+    % y_hat = f(x) * gain + offset
+    % --> first substract offset 
+    % --> second calc gain
     
     % if global offset is active: correct normed output with offset
     if obj.globalOffsetFlag && useGlobal
         outputNormed = outputNormed - obj.globalOffset;
+    end
+    
+    % if global gain is active: correct normed output with offset
+    if obj.globalGainFlag && useGlobal
+        outputNormed = outputNormed / obj.globalGain;
     end
     
 end

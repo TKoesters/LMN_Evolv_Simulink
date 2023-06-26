@@ -15,6 +15,9 @@ for i = 1 : obj.getNumberOfLocalModels
     localLinParameters(:,i) = obj.localModels{i}.theta;
 end
 
+% add global offset to each local offset
+localLinParameters(1,:) = localLinParameters(1,:) + obj.globalOffset; 
+
 %% create matrix with local Centers AND Variances 
 % M = [mu_LM1, mu_LM2, ... , mu_LMn];
 % S = [sigma_LM1, sigma_LM2, ... , sigma_LMn];

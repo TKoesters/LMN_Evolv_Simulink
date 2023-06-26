@@ -218,6 +218,7 @@ classdef LMN_evolv
             obj.AdaptOptions.ActivationThreshold = 0;
             obj.AdaptOptions.nBest = 0;
             obj.AdaptOptions.offsetAdaptionSpeed = 0;
+            obj.AdaptOptions.gainAdaptionSpeed = 0;
             obj.AdaptOptions.errorFilter = 0; % pole at 0 --> no filter active
             obj.AdaptOptions.localORglobalError = 'global';
             obj.AdaptOptions.inputs4Regularization = [];

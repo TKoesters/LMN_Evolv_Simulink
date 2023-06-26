@@ -29,7 +29,11 @@ CTt(end) = 1;%  * (obj.outputRange(2) - obj.outputRange(1));
 
 DTt = zeros(1,dimIn);
 
-offset = theta(1) ;% * (obj.outputRange(2) - obj.outputRange(1)) + obj.outputRange(1);
+if obj.globalOffsetFlag
+    offset = theta(1) + obj.globalOffset;
+else
+    offset = theta(1) ;% * (obj.outputRange(2) - obj.outputRange(1)) + obj.outputRange(1);
+end
 
 end
 

@@ -1,6 +1,10 @@
-function outputNormed = normOutput(obj,output)
+function outputNormed = normOutput(obj,output,useOffset)
 %NORMOUTPUT Summary of this function goes here
 %   Detailed explanation goes here
+    
+    if nargin==2
+        useOffset = true;
+    end
 
     if ~isempty(obj.outputNonlinearity)
         output = obj.outputNonlinearity(output);
@@ -9,7 +13,7 @@ function outputNormed = normOutput(obj,output)
     outputNormed = normData(output,obj.outputRange);
 
     % if global offset is active: correct normed output with offset
-    if obj.globalOffsetFlag
+    if obj.globalOffsetFlag && useOffset
         outputNormed = outputNormed - obj.globalOffset;
     end
     

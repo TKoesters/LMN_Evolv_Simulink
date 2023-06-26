@@ -321,7 +321,7 @@ classdef LMN_evolv
        % normalization
        obj = normTrainData(obj);
        inputNormed = normInputs(obj,input);
-       outputNormed = normOutput(obj,output);
+       outputNormed = normOutput(obj,output,useOffset);
        output = reNormOutput(obj,output);
        input = reNormInputs(obj,normedInput,dimensions2renorm);
        
@@ -342,7 +342,7 @@ classdef LMN_evolv
        [obj,xInputTt,zInputTt] = updateDeadtimeDatapuffer(obj,input);
        obj = updateRegressors(obj,input,output);
        obj = setLocalAdaptionFlag(obj,flagValue);
-       obj = updateGlobalOffset(obj,predOutput);
+       obj = updateGlobalOffset(obj,predOutput,output);
        linModel = getCurrentLinModel(obj,method);
        [A,B,C,D,offset] = getCurrentLinModelStateSpace(obj,method);
        [ATt,BTt,CTt,DTt,offset] = getCurrentLinModelStateSpaceTt(obj,method,delay,dimIn);

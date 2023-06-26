@@ -10,10 +10,14 @@ if nargin==1
 end
 
 %% get static parameters
-
 staticTheta = zeros(numberOfLocalStaticParameters,numberOfLocalModels);
 for i = 1 : numberOfLocalModels
    staticTheta(:,i) = obj.localModels{i}.calcStaticParameters(numberOfLocalStaticParameters,obj.dimIn,obj.outputRange,obj.inputRanges);
+end
+
+% add global offset when present
+if obj.globalOffsetFlag
+    staticTheta(1,:) = staticTheta(1,:) + obj.globalOffset;
 end
 
 %% create matrix with local Centers AND Variances 

@@ -23,7 +23,7 @@ obj = obj.updateRegressors(input,output);
 [~,priorOutput] = obj.calcCurrentModelOutput;
 
 % calc global error
-obj.globalError = obj.globalError * (obj.AdaptOptions.errorFilter) + (1-obj.AdaptOptions.errorFilter) * (obj.normOutput(output) - obj.normOutput(priorOutput));
+obj.globalError = obj.globalError * (obj.AdaptOptions.errorFilter) + (1-obj.AdaptOptions.errorFilter) * obj.normOutput(output - priorOutput, false);
 
 % update local Models
 if updateFlagLM
@@ -32,7 +32,7 @@ end
 
 % update offset
 if updateFlagOffset
-    obj = obj.updateGlobalOffset(priorOutput);
+    obj = obj.updateGlobalOffset(priorOutput,output);
 end
 
 % if history data storing switched on store current adaption status

@@ -18,6 +18,9 @@ end
 % add global offset to each local offset
 localLinParameters(1,:) = localLinParameters(1,:) + obj.globalOffset; 
 
+% use global gain
+localLinParameters(2:end,:) = localLinParameters(2:end,:) * obj.globalGain; 
+
 %% create matrix with local Centers AND Variances 
 % M = [mu_LM1, mu_LM2, ... , mu_LMn];
 % S = [sigma_LM1, sigma_LM2, ... , sigma_LMn];

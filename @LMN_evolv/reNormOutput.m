@@ -6,7 +6,11 @@ function output = reNormOutput(obj,normedOutput)
 if obj.globalOffsetFlag
     normedOutput = normedOutput + obj.globalOffset;
 end
-    
+
+% if global gain is active: correct normed output with gain
+if obj.globalGainFlag
+    normedOutput = normedOutput * obj.globalGain;
+end
 
 output = reNormData(normedOutput,obj.outputRange);
 

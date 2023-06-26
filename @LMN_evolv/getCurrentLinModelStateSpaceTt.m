@@ -13,6 +13,11 @@ end
 %% get model coefficients
 theta = obj.getCurrentLinCoeffs(method);
 
+%% use global gain if used
+if obj.globalGainFlag
+    theta = theta * obj.globalGain;
+end
+
 %% create model from theta
 
 ATt = [zeros(1,delay);...

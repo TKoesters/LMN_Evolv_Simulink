@@ -1,12 +1,16 @@
-function [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset)
+function [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset,updateFlagGain)
 %UPDATELMN Summary of this function goes here
 %   Detailed explanation goes here
 
 if nargin<4
     updateFlagLM = true;
     updateFlagOffset = false;
+    updateFlagGain = false;
 elseif nargin==4
     updateFlagOffset = false;
+    updateFlagGain = false;
+elseif nargin==5
+    updateFlagGain = false;
 end
 
 
@@ -30,9 +34,14 @@ if updateFlagLM
     obj = obj.updateLocalModels(obj.globalError);
 end
 
-% update offset
+% update global offset
 if updateFlagOffset
     obj = obj.updateGlobalOffset(priorOutput,output);
+end
+
+% update global gain
+if updateFlagGain
+    obj = obj.updateGlobalGain(priorOutput,output);
 end
 
 % if history data storing switched on store current adaption status

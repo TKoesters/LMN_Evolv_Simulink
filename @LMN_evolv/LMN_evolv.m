@@ -188,6 +188,10 @@ classdef LMN_evolv
         % global offset model
         globalOffsetFlag = false;
         globalOffset = 0;
+
+        % global gain model
+        globalGainFlag = false;
+        globalGain = 1;
         
     end
     
@@ -336,7 +340,7 @@ classdef LMN_evolv
        
        % Adaption
        %obj = initializeLMNforAdaption(obj,numerDatapoints);
-       [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset)
+       [obj, priorOutput] = updateLMN(obj,input,output,updateFlagLM,updateFlagOffset,updateFlagGain)
        obj = evolveLMN(obj);
        obj = updateLocalModels(obj,globalError);
        [obj,xInputTt,zInputTt] = updateDeadtimeDatapuffer(obj,input);

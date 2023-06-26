@@ -1,9 +1,9 @@
-function outputNormed = normOutput(obj,output,useOffset)
+function outputNormed = normOutput(obj,output,useGlobal)
 %NORMOUTPUT Summary of this function goes here
 %   Detailed explanation goes here
     
     if nargin==2
-        useOffset = true;
+        useGlobal = true;
     end
 
     if ~isempty(obj.outputNonlinearity)
@@ -12,8 +12,13 @@ function outputNormed = normOutput(obj,output,useOffset)
     
     outputNormed = normData(output,obj.outputRange);
 
+    % if global gain is active: correct normed output with offset
+    if obj.globalGainFlag && useGlobal
+        outputNormed = outputNormed / obj.globalGain;
+    end
+    
     % if global offset is active: correct normed output with offset
-    if obj.globalOffsetFlag && useOffset
+    if obj.globalOffsetFlag && useGlobal
         outputNormed = outputNormed - obj.globalOffset;
     end
     

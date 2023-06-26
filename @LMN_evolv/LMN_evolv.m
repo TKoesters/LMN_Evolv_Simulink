@@ -348,6 +348,7 @@ classdef LMN_evolv
        [ATt,BTt,CTt,DTt,offset] = getCurrentLinModelStateSpaceTt(obj,method,delay,dimIn);
        theta = getCurrentLinCoeffs(obj,method);
        [localLinParameters,localCenters,localVariance] = getAllParameters(obj);
+       obj = setAllParameters(obj,localLinParameters,localCenters,localVariance);
 
        % get Static Model 
        staticModel = getStaticModel(obj);

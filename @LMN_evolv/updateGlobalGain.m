@@ -6,9 +6,7 @@ function obj = updateGlobalGain(obj,predOutput,output)
 error = obj.normOutput(output - predOutput,false);
 
 % update global offset with error and adaption speed
-obj.globalGain = obj.globalGain - error * obj.normOutput(predOutput,false) * obj.AdaptOptions.gainAdaptionSpeed;
-
-
+obj.globalGain = obj.globalGain + error * obj.normOutput(predOutput,false) * obj.AdaptOptions.gainAdaptionSpeed;
 
 end
 

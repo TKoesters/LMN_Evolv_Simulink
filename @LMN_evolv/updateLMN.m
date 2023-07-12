@@ -27,7 +27,7 @@ obj = obj.updateRegressors(input,output);
 [~,priorOutput] = obj.calcCurrentModelOutput;
 
 % calc global error
-obj.globalError = obj.globalError * (obj.AdaptOptions.errorFilter) + (1-obj.AdaptOptions.errorFilter) * obj.normOutput(output - priorOutput, false);
+obj.globalError = obj.globalError * (obj.AdaptOptions.errorFilter) + (1-obj.AdaptOptions.errorFilter) * (obj.normOutput(output,false) - obj.normOutput(priorOutput, false));
 
 % update local Models
 if updateFlagLM

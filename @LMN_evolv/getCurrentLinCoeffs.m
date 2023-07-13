@@ -11,7 +11,8 @@ switch method
         theta = obj.localModels{maxIndex}.theta;
     case 'combined'
         for i = 1 : obj.getNumberOfLocalModels
-            theta = theta + obj.localModels{i}.theta * normValidity(i)/obj.getNumberOfLocalModels;
+            % old theta = theta + obj.localModels{i}.theta * normValidity(i)/obj.getNumberOfLocalModels;
+            theta = theta + obj.localModels{i}.theta * normValidity(i);
         end
 
     otherwise
